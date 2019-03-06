@@ -1,3 +1,15 @@
+*workflowy.el* is an org-mode minor mode that replicates Workflowy's features.
+Org-mode behaves similarly to mainstream text editors like Microsoft Word. See features below.
+* Features
+** Enter creates a new node, instead of adding a node.
+** Zoom in and out of nodes.
+** Same keyboard shortcuts as Workflowy (see table below).
+** Text body width and window margins (thanks to ~olivetti-mode~) for increased readability.
+* Installation
+#+BEGIN_SRC emacs-lisp
+(require 'workflowy)
+(add-hook 'org-mode-hook (lambda () (workflowy-mode 1)))
+#+END_SRC
 * Keyboard shortcuts
 | Action | Workflowy                       | workflowy.el                 |
 |--------+---------------------------------+------------------------------|
