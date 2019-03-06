@@ -1,10 +1,10 @@
 *workflowy.el* is an org-mode minor mode that replicates Workflowy's features.
 Org-mode behaves similarly to mainstream text editors like Microsoft Word. See features below.
 * Features
-** Enter creates a new node, instead of adding a node.
-** Zoom in and out of nodes.
-** Same keyboard shortcuts as Workflowy (see table below).
-** Text body width and window margins (thanks to ~olivetti-mode~) for increased readability.
+- [X] Enter creates a new node, instead of adding a node.
+- [X] Zoom in and out of nodes.
+- [X] Same keyboard shortcuts as Workflowy (see table below).
+- [X] Text body width and window margins (thanks to ~olivetti-mode~) for increased readability.
 * Installation
 #+BEGIN_SRC emacs-lisp
 (require 'workflowy)
@@ -16,3 +16,7 @@ Org-mode behaves similarly to mainstream text editors like Microsoft Word. See f
 |        | <kbd>Alt</kbd>+<kbd>right</kbd> | <kbd>Ctrl</kbd>+<kbd>></kbd> |
 |        | <kbd>Alt</kbd>+<kbd>left</kbd>  | <kbd>Alt</kbd>+<kbd><</kbd>  |
 |        |                                 |                              |
+* Todo
+- [ ] Prevent wrong identing (e.g. level 3 headline directly under a level 1 headline).
+- [ ] Pressing return in the middle of a headline, creates a new one with the text after the pointer.
+- [ ] Pressing enter on an empty bullet, removes the bullet (creating a note).
