@@ -1,0 +1,6 @@
+* Keyboard shortcuts
+| Action | Workflowy                       | workflowy.el                 |
+|--------+---------------------------------+------------------------------|
+|        | <kbd>Alt</kbd>+<kbd>right</kbd> | <kbd>Ctrl</kbd>+<kbd>></kbd> |
+|        | <kbd>Alt</kbd>+<kbd>left</kbd>  | <kbd>Alt</kbd>+<kbd><</kbd>  |
+|        |                                 |                              |
