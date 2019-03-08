@@ -33,6 +33,7 @@
   nil nil nil
   (add-hook 'org-mode-hook 'set-olivetti)
   (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook #'org-change-bullets-depending-on-children)
   (define-key org-mode-map (kbd "C-<")
     'org-go-up-one-level)
   (define-key org-mode-map (kbd "C->")
@@ -87,6 +88,33 @@
   (interactive)
   (org-insert-heading-respect-content)
   (evil-insert-state))
+
+
+(defun org-change-bullets-depending-on-children ()
+  (interactive)
+  (font-lock-add-keywords
+   nil
+   '(("^\\*+ "
+      (0
+       (prog1 nil
+         (compose-region (match-beginning 0) (- (match-end 0) 1) (org-bullets-str))))))))
+
+(defun org-bullets-str ()
+  (interactive)
+  (if (save-excursion (org-goto-first-child)) "◉ " "○ "))
+
+;; below is wip
+(defun org-folded-p ()
+  "Returns non-nil if point is on a folded headline."
+  (and (org-at-heading-p)
+       (save-excursion (org-goto-first-child))
+       (invisible-p (point-at-eol))))
+
+(defun is-folded ()
+  "Interactive version of org-folded-p"
+  (interactive)
+  (if (org-folded-p) (message "yes") (message "no")))
+
 
 (provide 'workflowy)
 
