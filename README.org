@@ -5,6 +5,7 @@ Org-mode behaves similarly to mainstream text editors like Microsoft Word. See f
 - [X] Zoom in and out of nodes.
 - [X] Same keyboard shortcuts as Workflowy (see table below).
 - [X] Text body width and window margins (thanks to ~olivetti-mode~) for increased readability.
+- [X] Bullets reflect the presence of hidden child nodes
 * Installation
 #+BEGIN_SRC emacs-lisp
 (require 'workflowy)

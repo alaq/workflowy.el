@@ -31,6 +31,7 @@
 (define-minor-mode workflowy-mode
     "Workflowy's features in an emacs minor mode for org-mode."
   nil nil nil
+  (org-indent-mode)
   (add-hook 'org-mode-hook 'set-olivetti)
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook #'org-bullet-mode)
@@ -40,6 +41,7 @@
     'org-go-down-one-level)
   (define-key org-mode-map (kbd "RET")
     'org-better-return)
+  (setq header-line-format (concat "%b/" (org-format-outline-path(org-get-outline-path))))
   )
 
 (defun org-go-up-one-level ()
