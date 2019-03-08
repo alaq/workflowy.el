@@ -33,7 +33,7 @@
   nil nil nil
   (add-hook 'org-mode-hook 'set-olivetti)
   (add-hook 'org-mode-hook 'org-indent-mode)
-  (add-hook 'org-mode-hook #'org-change-bullets-depending-on-children)
+  (add-hook 'org-mode-hook #'org-bullet-mode)
   (define-key org-mode-map (kbd "C-<")
     'org-go-up-one-level)
   (define-key org-mode-map (kbd "C->")
@@ -52,6 +52,9 @@
     (org-up-element)
     (org-narrow-to-subtree))
   (recenter))
+
+(add-hook 'org-mode-hook #'org-change-bullets-depending-on-children)
+(add-hook 'org-mode-hook 'org-change-bullets-depending-on-children)
 
 (defun org-go-down-one-level ()
   "drill down one level, workflowy style"
@@ -90,20 +93,7 @@
   (evil-insert-state))
 
 
-(defun org-change-bullets-depending-on-children ()
-  (interactive)
-  (font-lock-add-keywords
-   nil
-   '(("^\\*+ "
-      (0
-       (prog1 nil
-         (compose-region (match-beginning 0) (- (match-end 0) 1) (org-bullets-str))))))))
-
-(defun org-bullets-str ()
-  (interactive)
-  (if (save-excursion (org-goto-first-child)) "◉ " "○ "))
-
-;; below is wip
+;; ;; below is wip
 (defun org-folded-p ()
   "Returns non-nil if point is on a folded headline."
   (and (org-at-heading-p)
@@ -114,6 +104,41 @@
   "Interactive version of org-folded-p"
   (interactive)
   (if (org-folded-p) (message "yes") (message "no")))
+
+;; replace bullets depending of the presence of child nodes or not
+(defcustom org-content (string-to-char "◉")
+  "Replacement for * as header prefixes."
+  :type 'characterp
+  :group 'org)
+
+(defcustom org-no-content (string-to-char "○")
+  "Replacement for * as header prefixes."
+  :type 'characterp
+  :group 'org)
+
+(defun org-bullets-str ()
+  (interactive)
+  (if (save-excursion (org-goto-first-child)) org-bullet-with-folded-content org-bullet-no-content))
+
+(define-minor-mode org-bullet-mode
+  "Bullet for org-mode"
+  nil nil nil
+  (let* ((keyword
+          `(("^\\*+ "
+             (0 (let* ((level (- (match-end 0) (match-beginning 0) 1)))
+                  (when (> level 1)
+                    (put-text-property (match-beginning 0) (- (match-end 0) 2) 'display (make-string (1- level) org-no-content)))
+                  (put-text-property (- (match-end 0) 2) (- (match-end 0) 1) 'display (string (if (save-excursion (org-goto-first-child)) org-content org-no-content)))
+                  nil))))))
+    (if org-bullet-mode
+        (progn
+          (font-lock-add-keywords nil keyword)
+          (font-lock-fontify-buffer))
+      (save-excursion
+        (goto-char (point-min))
+        (font-lock-remove-keywords nil keyword)
+        (font-lock-fontify-buffer))
+      )))
 
 
 (provide 'workflowy)
