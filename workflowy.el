@@ -55,8 +55,8 @@
     (org-narrow-to-subtree))
   (recenter))
 
-(add-hook 'org-mode-hook #'org-change-bullets-depending-on-children)
-(add-hook 'org-mode-hook 'org-change-bullets-depending-on-children)
+;; (add-hook 'org-mode-hook #'org-change-bullets-depending-on-children)
+;; (add-hook 'org-mode-hook 'org-change-bullets-depending-on-children)
 
 (defun org-go-down-one-level ()
   "drill down one level, workflowy style"
